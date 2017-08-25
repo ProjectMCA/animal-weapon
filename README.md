@@ -4,7 +4,7 @@
 フォルダ構成と内容は以下の通りです
 - src
   -	app.js
--asset
+- asset
   -	image
   -	sounds
 - index.html
