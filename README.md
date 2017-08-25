@@ -4,11 +4,13 @@
 フォルダ構成と内容は以下の通りです
 - src
   -	app.js
-- asset
-  -	image
+- assets
+  -	images
   -	sounds
 - index.html
 - data
-  - characters.json
+  - animals.json
   - skills.json
   - maps.json
+- libs
+  - enchant.min.js
