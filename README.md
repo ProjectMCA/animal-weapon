@@ -9,6 +9,6 @@
   -	sounds
 - index.html
 - data
- -	characters.json
- -	skills.json
- -	maps.json
+  - characters.json
+  - skills.json
+  - maps.json
