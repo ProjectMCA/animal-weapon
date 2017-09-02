@@ -1,6 +1,6 @@
 //commandsデータ（仮置き）
 var commands = [
-  animals : {
+  {
     id : 1,
     status : {
       hp : 200,
@@ -40,7 +40,7 @@ var commands = [
 
 //スキルspd、キャラspdの順に降順ソートする
 commands.sort(
-  (first, next) => next.animals.skill.spd - first.animals.skill.spd || next.animals.status.spd - first.animals.status.spd
+  (first, next) => next.skill.spd - first.skill.spd || next.status.spd - first.status.spd
 )
 
 
