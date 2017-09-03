@@ -9,7 +9,7 @@ var commands = [
     },
     skill : {
       power : 0.8,
-      spd : 0
+      priority : 0
     }
   },
   {
@@ -21,7 +21,7 @@ var commands = [
     },
     skill : {
       power : 0.8,
-      spd : 100
+      priority : 1
     }
   },
   {
@@ -33,14 +33,15 @@ var commands = [
     },
     skill : {
       power : 0.8,
-      spd : 100
+      priority : 1
     }
   }
 ];//準備フェイズ部分と合併時に削除or変更
 
-//スキルspd、キャラspdの順に降順ソートする
+//スキルpriority、キャラspdの順に降順ソートする
+//実際にはスキルの前に攻撃など各種コマンドのpriorityソートをかけることになる
 commands.sort(
-  (first, next) => next.skill.spd - first.skill.spd || next.status.spd - first.status.spd
+  (first, next) => next.skill.priority - first.skill.spriority || next.status.spd - first.status.spd
 )
 
 
