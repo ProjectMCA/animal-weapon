@@ -41,7 +41,7 @@ var commands = [
 //スキルpriority、キャラspdの順に降順ソートする
 //実際にはスキルの前に攻撃など各種コマンドのpriorityソートをかけることになる
 commands.sort(
-  (first, next) => next.skill.priority - first.skill.spriority || next.status.spd - first.status.spd
+  (first, next) => next.skill.priority - first.skill.priority || next.status.spd - first.status.spd
 )
 
 
