@@ -89,5 +89,3 @@ commands.sort(
 )
 
 var sortedCommands = commands;
-
-console.log(sortedCommands);
