@@ -1,3 +1,4 @@
+/*
 //commandsデータ（仮置き）
 var animals = [];
 var enemys = [];
@@ -89,3 +90,4 @@ commands.sort(
 )
 
 var sortedCommands = commands;
+*/

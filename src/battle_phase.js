@@ -1,3 +1,4 @@
+/*
 //act_order_datermining.js内のsortedCommandsを利用
 
 //sortedCommandsが空配列であるかの判定
@@ -22,3 +23,4 @@ while (sortedCommands.length > 0) {
 console.log(animals);
 console.log(enemys);
 console.log(sortedCommands);
+*/
