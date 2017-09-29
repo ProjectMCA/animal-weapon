@@ -1,52 +1,52 @@
 enchant();
 window.onload = function() {
-  
+
   var game = new Game(320, 320);
   game.fps=16;
-       var playerLife=100;
-    var playerPower=50;
-    var enemyLife=60;
-    var enemyPower=30;
-    var winer=new Label('yourwin');
- 	var loser=new Label('youlose');
+  var playerLife=100;
+  var playerPower=50;
+  var enemyLife=60;
+  var enemyPower=30;
+  var winer=new Label('yourwin');
+  var loser=new Label('youlose');
 
-    var attack = new Label('attack');
-    var attackNotation = new Label('player');
-    var damage = new Label('');
-    var enemyNotation=new Label('enemy');
-    var enemydamage=new Label('');    
-    var diffence = new Label("diffence");
-    varlose=new Label("lose");
-    var reset = new Label("reset");
+  var attack = new Label('attack');
+  var attackNotation = new Label('player');
+  var damage = new Label('');
+  var enemyNotation=new Label('enemy');
+  var enemydamage=new Label('');
+  var diffence = new Label("diffence");
+  varlose=new Label("lose");
+  var reset = new Label("reset");
   game.onload = function() {
- 
-  init();
+
+    init();
   }
   function init(){
-  
-playerLife=100;
-     playerPower=50;
-     enemyLife=60;
-     enemyPower=30;
-     winer=new Label('yourwin');
- 	 loser=new Label('youlose');
 
-     attack = new Label('attack');
-     attackNotation = new Label('player');
-     damage = new Label('');
-     enemyNotation=new Label('enemy');
-     enemydamage=new Label('');    
-     diffence = new Label("diffence");
+    playerLife=100;
+    playerPower=50;
+    enemyLife=60;
+    enemyPower=30;
+    winer=new Label('yourwin');
+    loser=new Label('youlose');
+
+    attack = new Label('attack');
+    attackNotation = new Label('player');
+    damage = new Label('');
+    enemyNotation=new Label('enemy');
+    enemydamage=new Label('');
+    diffence = new Label("diffence");
     lose=new Label("lose");
-     reset = new Label("reset");
-  
+    reset = new Label("reset");
 
-   attackNotation.damage=playerPower;
-   enemyNotation.damage=enemyPower;
+
+    attackNotation.damage=playerPower;
+    enemyNotation.damage=enemyPower;
     attackNotation.visible=false;
     winer.visible=false;
     loser.visible=false;
-    
+
     game.rootScene.addChild(winer);
     game.rootScene.addChild(loser);
     game.rootScene.addChild(attack);
@@ -72,20 +72,20 @@ playerLife=100;
     reset.visible=false;
     attack.addEventListener('touchstart', function() {
       attackNotation.visible=true;
-     enemyLife=enemyLife-playerPower;
-     
-      
+      enemyLife=enemyLife-playerPower;
+
+
     });
     attackNotation.addEventListener('touchstart',function(){
-      
+
       damage.text=String(this.damage);
       damage.visible=true;
       sleep3(2,function(){
         enemyNotation.visible=true;
         EndDetermination();
-        
+
       });
-      
+
     });
     enemyNotation.addEventListener('touchstart',function(){
       enemydamage.text=String(this.enemydamage);
@@ -94,86 +94,117 @@ playerLife=100;
       attackNotation.visible=false;
       enemyNotation.visible=false;
       enemydamage.visible=true;
-      
+
       sleep3(2,function(){
         enemydamage.visible=false;
         EndDetermination();
         console.log(enemyLife);
-        
+
       });
-	
+
     });
     reset.addEventListener('touchstart',function(){
-    attackNotation.visible=false;
-    damage.visible=false;
-    winer.visible=false;
-    reset.visible=false;
-    if(enemyLife<0)
-    {
-    attackNotation.visible=false;
-    }
-    init();
-   
+      attackNotation.visible=false;
+      damage.visible=false;
+      winer.visible=false;
+      reset.visible=false;
+      if(enemyLife<0)
+      {
+        attackNotation.visible=false;
+      }
+      init();
+
     });
-    
-  
+
+
     diffence.x = 100;
     diffence.y = 150;
     game.rootScene.addChild(diffence);
-    
-   
+
+
     loser.x=200;
     loser.y=200;
     game.rootScene.addChild(loser);
     loser.visible=false;
   }
-  
+  function animalCreate(){
+    return ani;
+  }
+  function enemyCreate(){
+    return ene;
+  }
+  function Sprite(path,frame,pos,stat){
+    this.image = core.assets[path];
+    this.frame = frame;
+    this.pos=pos;
+    this.stat=stat;
+
+  }
+function Position(x,y){
+  this.x=x;
+  this.y=y;
+}
+
+function Status(status){
+  this.name=status.name;
+  this.maxhp=status.maxhp;
+  this.hp=status.hp;
+  this.atk=status.atk;
+  this.spd=status.spd;
+
+}
+function Actor(){
+  this.sprite=sprite;
+  this.status=status;
+}
+
+
   function EndDetermination(){
-    
+
     if(playerLife>0 && enemyLife>0){
 
       return;
     }
     if(playerLife<0){
-    loser.visible=true;
+      loser.visible=true;
     }
     if(enemyLife<0){
-    enemyNotation.visible=false;
-    winer.visible=true;
+      enemyNotation.visible=false;
+      winer.visible=true;
     }
-          
-reset.visible=true;
-game.rootScene.removeChild(attack);
-game.rootScene.removeChild(diffence);  
 
-    
+    reset.visible=true;
+    game.rootScene.removeChild(attack);
+    game.rootScene.removeChild(diffence);
+
+
   }
-  
-  
+
+
   function sleep3(waitSec, callbackFunc) {
-    
+
     var spanedSec = 0;
-    
+
     var waitFunc = function () {
-      
+
       spanedSec++;
-      
+
       if (spanedSec >= waitSec) {
         if (callbackFunc) {
           callbackFunc();
         }
         return;
       }
-      
+
       clearTimeout(id);
       id = setTimeout(waitFunc, 1000);
     };
-    
+
     var id = setTimeout(waitFunc, 1000);
-    
+
   }
-  
+
   game.start();
-  
+
 
 }
