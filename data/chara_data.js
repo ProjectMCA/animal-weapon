@@ -15,7 +15,7 @@ var animals = {
     name : 'animalA',
     maxhp : 100,
     hp : 100,
-    atk : 25,
+    atk : 30,
     spd : 20
   },
   1 : {
@@ -33,7 +33,7 @@ var animals = {
     name : 'animalC',
     maxhp : 100,
     hp : 100,
-    atk : 30,
+    atk : 25,
     spd : 5
   }
 }
