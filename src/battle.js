@@ -15,6 +15,7 @@ var makeSelect = function(text, y) {
 //実装につきグローバル変数にしたかった変数群、仮置きなので問題があれば変更してください
 var animal = new Sprite(32, 32);
 var enemy = new Sprite(48, 48);
+enemy.initialize(48,48);
 var animalHPlabel = new Label;
 var enemyHPlabel = new Label;
 var message = new Label;  //戦闘メッセージの諸々設定
@@ -29,7 +30,7 @@ var nextMessageFlag = 0;
 
 window.onload = function() {
 
-  var core = new Game(320, 320);
+  var core = new Core(320, 320);
   core.fps = 16;
   core.preload(
     'data/map/map1.png', 'data/chara/chara0.png', 'data/chara/chara5.png',
@@ -37,7 +38,7 @@ window.onload = function() {
     'data/chara/monster3.gif', 'data/chara/monster4.gif',
     'data/othres/clear.png', 'data/othres/end.png',
   );
-  console.log(core);
+  core.time = 0;
 
   core.onload = function() {
     core.pushScene(core.title());
@@ -102,7 +103,6 @@ window.onload = function() {
     animal.hp = ani.hp;
     animal.atk = ani.atk;
     animal.spd = ani.spd;
-    scene.addChild(animal); //stageにanimalを加える
 
     //enemysの作成
     var ene; //エネミーのデータを格納する変数
@@ -112,12 +112,12 @@ window.onload = function() {
     enemy.frame = 3;
     enemy.x = 200;
     enemy.y = 150;
+    enemy.tick = 0;
     enemy.name = ene.name;
     enemy.maxhp = ene.maxhp;
     enemy.hp = ene.hp;
     enemy.atk = ene.atk;
     enemy.spd = ene.spd;
-    scene.addChild(enemy);
 
     //アニマルのHP表示のラベル作成
     animalHPlabel.text = 'HP:' + animal.hp + '/' + animal.maxhp;
@@ -140,6 +140,12 @@ window.onload = function() {
     //シーンを作成
     var scene = new Scene();
 
+    //表示するスプライト、ラベルの引き継ぎ
+    scene.addChild(animal);
+    scene.addChild(enemy);
+    scene.addChild(animalHPlabel);
+    scene.addChild(enemyHPlabel);
+
     //攻撃コマンドの作成
     var attackLabel = new Label('攻撃');
     attackLabel.x = 16;
@@ -148,15 +154,14 @@ window.onload = function() {
     attackLabel.font = '20px sens-serif';
     scene.addChild(attackLabel);
 
-    scene.addChild(animalHPlabel);
-    scene.addChild(enemyHPlabel);
-
     //attackLabelの「touchstart」イベントが発生した時に実行するリスナ
-    attackLabel.addEventListener('touchstart', function(e) {
-      //複数作成されないように表示しているラベル群の消去
-      scene.removeChild(attackLabel);
+    attackLabel.addEventListener('touchstart', function() {
+      //複数作成されないように表示しているスプライト、ラベルの消去
+      scene.removeChild(animal);
+      scene.removeChild(enemy);
       scene.removeChild(animalHPlabel);
       scene.removeChild(enemyHPlabel);
+      scene.removeChild(attackLabel);
       //準備が終わったら戦闘実行シーンへ
       core.pushScene(core.battle());
     });
@@ -170,7 +175,9 @@ window.onload = function() {
     //シーンを作成
     var scene = new Scene();
 
-    //ラベルの再生成
+    //表示するスプライト、ラベルの引き継ぎ
+    scene.addChild(animal);
+    scene.addChild(enemy);
     scene.addChild(animalHPlabel);
     scene.addChild(enemyHPlabel);
 
@@ -183,7 +190,7 @@ window.onload = function() {
     //enemyのhpが「0」以下になったら、enemyのhpを0にする
     if (enemy.hp < 0) {
       enemy.hp = 0;
-    };
+    }
 
     //戦闘メッセージを表示する
     //戦闘メッセージ群を作成する
@@ -194,8 +201,10 @@ window.onload = function() {
     scene.addChild(next);
 
     //nextラベルのイベントリスナ
-    next.addEventListener('touchstart', function(e) {
+    next.addEventListener('touchstart', function() {
       if (nextMessageFlag == 0) {
+        //enemyの被ダメージ演出（点滅）
+        enemy.tl.fadeOut(1).fadeIn(5).fadeOut(1).fadeIn(5);
         //メッセージ切り替え
         message.text = enemy.name + 'に' + animal.atk + 'ダメージ!';
 
@@ -203,7 +212,7 @@ window.onload = function() {
 
         //hp表示ラベルを更新する
         enemyHPlabel.text = 'HP:' + enemy.hp + '/' + enemy.maxhp;
-
+        //console.log(enemy);
       }
       else if (nextMessageFlag == 1) {
         //戦闘終了判定
@@ -225,6 +234,8 @@ window.onload = function() {
 
       }
       else if (nextMessageFlag == 2) {
+        //animalの被ダメージ演出（点滅）
+        animal.tl.fadeOut(1).fadeIn(5).fadeOut(1).fadeIn(5);
         //メッセージの切り替え
         message.text = animal.name + 'に' + enemy.atk + 'ダメージ!';
         nextMessageFlag = 3;
@@ -280,7 +291,7 @@ window.onload = function() {
     gameover.image = core.assets['data/othres/end.png'];
     gameover.x = 60;
     gameover.y = 112;
-    gameover.addEventListener('touchstart', function(e) {
+    gameover.addEventListener('touchstart', function() {
       core.replaceScene(core.title());
     });
     scene.addChild(gameover);
