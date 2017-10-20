@@ -320,11 +320,11 @@ window.onload = function() {
     scene.addChild(enemyHPlabel);
 
     //選択したスキルを作成
-    var playerSkill = new Skill(enemy.x - 20, enemy.y - 20, player.select);
+    var playerSkill = new Skill(enemy.x - 26, enemy.y - 26, player.select);
     playerSkill.image = core.assets[skills[player.select].image];
     //エネミーのスキル選択(今回はランダム)
     enemy.select = Math.floor(Math.random()* 3);
-    var enemySkill = new Skill(player.x - 20, player.y -20, enemy.select);
+    var enemySkill = new Skill(player.x - 34, player.y - 34, enemy.select);
     enemySkill.image = core.assets[skills[enemy.select].image];
 
     //enemyのhpからplayerのatk*skillのpowerを引く
